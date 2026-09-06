@@ -1,0 +1,139 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x08000000         0x00010000         xr
+SRAM             0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD main.o
+LOAD STM32_startup.o
+
+.text           0x08000000      0x188
+                0x08000000                . = ALIGN (0x4)
+ *(.isr_section)
+ .isr_section   0x08000000       0xec STM32_startup.o
+                0x08000000                Vector_table
+ *(.text)
+ .text          0x080000ec       0x12 main.o
+                0x080000ec                main
+ *fill*         0x080000fe        0x2 
+ .text          0x08000100       0x88 STM32_startup.o
+                0x08000100                EXTI2_IRQHandler
+                0x08000100                DebugMonitor_Handler
+                0x08000100                TIM1_CC_IRQHandler
+                0x08000100                HardFault_Handler
+                0x08000100                SysTick_Handler
+                0x08000100                PVD_IRQHandler
+                0x08000100                PendSV_Handler
+                0x08000100                NMI_Handler
+                0x08000100                EXTI3_IRQHandler
+                0x08000100                EXTI0_IRQHandler
+                0x08000100                I2C2_EV_IRQHandler
+                0x08000100                UsageFault_Handler
+                0x08000100                ADC1_2_IRQHandler
+                0x08000100                SPI1_IRQHandler
+                0x08000100                TAMPER_IRQHandler
+                0x08000100                DMA1_Channel4_IRQHandler
+                0x08000100                USART3_IRQHandler
+                0x08000100                RTC_IRQHandler
+                0x08000100                DMA1_Channel7_IRQHandler
+                0x08000100                CAN1_RX1_IRQHandler
+                0x08000100                TIM4_IRQHandler
+                0x08000100                I2C1_EV_IRQHandler
+                0x08000100                DMA1_Channel6_IRQHandler
+                0x08000100                TIM3_IRQHandler
+                0x08000100                RCC_IRQHandler
+                0x08000100                EXTI10_15_IRQHandler
+                0x08000100                TIM1_TRG_COM_IRQHandler
+                0x08000100                DMA1_Channel1_IRQHandler
+                0x08000100                Default_Handler
+                0x08000100                EXTI9_5_IRQHandler
+                0x08000100                SPI2_IRQHandler
+                0x08000100                MemManage_Handler
+                0x08000100                SVC_Handler
+                0x08000100                DMA1_Channel5_IRQHandler
+                0x08000100                EXTI4_IRQHandler
+                0x08000100                USB_LP_CAN1_RX0_IRQHandler
+                0x08000100                USB_HP_CAN1_TX_IRQHandler
+                0x08000100                DMA1_Channel3_IRQHandler
+                0x08000100                TIM1_UP_IRQHandler
+                0x08000100                WWDG_IRQHandler
+                0x08000100                TIM2_IRQHandler
+                0x08000100                TIM1_BRK_IRQHandler
+                0x08000100                EXTI1_IRQHandler
+                0x08000100                RTCAlarm_IRQHandler
+                0x08000100                USART2_IRQHandler
+                0x08000100                I2C2_ER_IRQHandler
+                0x08000100                DMA1_Channel2_IRQHandler
+                0x08000100                CAN1_SCE_IRQHandler
+                0x08000100                FLASH_IRQHandler
+                0x08000100                BusFault_Handler
+                0x08000100                USART1_IRQHandler
+                0x08000100                I2C1_ER_IRQHandler
+                0x08000100                USBWakeUp_IRQHandler
+                0x08000106                reset_handler
+ *(.text*)
+ *(.rodata)
+ *(.rodata*)
+                0x08000188                . = ALIGN (0x4)
+                0x08000188                _etext = .
+
+.glue_7         0x08000188        0x0
+ .glue_7        0x08000188        0x0 linker stubs
+
+.glue_7t        0x08000188        0x0
+ .glue_7t       0x08000188        0x0 linker stubs
+
+.vfp11_veneer   0x08000188        0x0
+ .vfp11_veneer  0x08000188        0x0 linker stubs
+
+.v4_bx          0x08000188        0x0
+ .v4_bx         0x08000188        0x0 linker stubs
+
+.iplt           0x08000188        0x0
+ .iplt          0x08000188        0x0 STM32_startup.o
+
+.rel.dyn        0x08000188        0x0
+ .rel.iplt      0x08000188        0x0 STM32_startup.o
+
+.data           0x20000000        0x0 load address 0x08000188
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _sdata = .
+ *(.data)
+ .data          0x20000000        0x0 main.o
+ .data          0x20000000        0x0 STM32_startup.o
+ *(.data*)
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _edata = .
+                0x08000188                _sidata = LOADADDR (.data)
+
+.igot.plt       0x20000000        0x0 load address 0x08000188
+ .igot.plt      0x20000000        0x0 STM32_startup.o
+
+.bss            0x20000000        0x0 load address 0x08000188
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _sbss = .
+ *(.bss)
+ .bss           0x20000000        0x0 main.o
+ .bss           0x20000000        0x0 STM32_startup.o
+ *(.bss*)
+ *(COMMON)
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _ebss = .
+OUTPUT(final.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x57
+ .comment       0x00000000       0x57 main.o
+                                 0x58 (size before relaxing)
+ .comment       0x00000057       0x58 STM32_startup.o
+
+.ARM.attributes
+                0x00000000       0x2d
+ .ARM.attributes
+                0x00000000       0x2d main.o
+ .ARM.attributes
+                0x0000002d       0x2d STM32_startup.o
