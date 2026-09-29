@@ -12,7 +12,7 @@ A modular, register-level GPIO driver and hardware interrupt framework for the A
 └── Src/
     ├── STM32F1xx_GPIO_Driver.c    # Low-level driver implementation routines
     ├── led_toggle.c               # Application 1: Basic output pin toggling
-    ├── led_button.c               # Application 2: Input polling via Input Data Register (IDR)
+    ├── led_button.c               # Application 2: LED toggle using button
     └── led_buttonIRQ.c            # Application 3: Asynchronous EXTI & NVIC hardware interrupts
 
 ```
