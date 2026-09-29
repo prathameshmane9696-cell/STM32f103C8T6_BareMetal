@@ -20,7 +20,7 @@ LOAD STM32_startup.o
  .text          0x080000ec       0x12 main.o
                 0x080000ec                main
  *fill*         0x080000fe        0x2 
- .text          0x08000100       0x88 STM32_startup.o
+ .text          0x08000100        0x88 STM32_startup.o
                 0x08000100                EXTI2_IRQHandler
                 0x08000100                DebugMonitor_Handler
                 0x08000100                TIM1_CC_IRQHandler
